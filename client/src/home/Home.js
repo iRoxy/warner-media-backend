@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import _ from 'lodash';
 import Series from "../series/Series";
 
 class Home extends Component {
@@ -31,25 +30,27 @@ class Home extends Component {
           .then((result) => {
 
             let results = JSON.parse(result.data.result);
-            // console.log(results);
-            var small = [];
-            _.map(results, (item) => {
-              return item.seriesName;
-            });
 
-            this.setState({items: results });
+            let names = [];
+
+            for (let i = 0; i < results.data.length; i++) {
+              let value = results.data[i];
+              names.push(value.seriesName);
+            }
+
+            this.setState({items: names });
       });
   }
 
   renderUserInfo() {
       if (this.state.items.length > 0) {
-        this.state.items.forEach((item) => {
-          let s = item
-          return <Series name={s} />
-        });
-      } else {
-        let s = "Raque"
-        return <Series name={s} />
+        let n = this.state.items.length;
+        let series = [];
+        for(let i = 0; i < n; i++) {
+          let name = this.state.items[i];
+          series.push(<Series name={name}/>);
+        }
+        return series;
       }
     }
 

@@ -48,7 +48,7 @@ func main() {
 		}
 
 		buf := new(bytes.Buffer)
-    buf.ReadFrom(c.Request.Body)
+		buf.ReadFrom(c.Request.Body)
 		reqPostVal := SearchResult{}
 		json.Unmarshal(buf.Bytes(), &reqPostVal)
 
